@@ -2,9 +2,12 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ListItem = ({singleMedia}) => {
+const ListItem = ({singleMedia, navigation}) => {
   return (
-    <TouchableOpacity style={styles.item}>
+    <TouchableOpacity style={styles.item}
+      onPress={() => {
+        navigation.navigate('Single', singleMedia);
+      }}>
       <Image
         style={styles.image}
         source={{uri: `http://media.mw.metropolia.fi/wbma/uploads/${singleMedia.thumbnails.w160}`}}/>
@@ -39,6 +42,7 @@ ListItem.propTypes = {
     thumbnails: PropTypes.exact({w160: PropTypes.string}),
     filename: PropTypes.string,
   }),
+  navigation: PropTypes.any,
 };
 
 export default ListItem;
