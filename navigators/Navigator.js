@@ -6,10 +6,8 @@ import Login from '../views/Login';
 import {NavigationContainer} from '@react-navigation/native';
 import {MainContext} from '../contexts/MainContext';
 import Profile from '../views/Profile';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
 
 const Navigator = () => {
   return (
@@ -20,15 +18,15 @@ const Navigator = () => {
 };
 
 const StackScreen = () => {
-  const [isLoggedIn] = useContext(MainContext);
+  const {isLoggedIn} = useContext(MainContext);
   return (
 
     <Stack.Navigator>
       {isLoggedIn ? (
         <>
-          <Tab.Screen name="Home" component={Home}/>
-          <Tab.Screen name="Single" component={Single}/>
-          <Tab.Screen name="Profile" component={Profile}/>
+          <Stack.Screen name="Home" component={Home}/>
+          <Stack.Screen name="Single" component={Single}/>
+          <Stack.Screen name="Profile" component={Profile}/>
         </>
       ) : (
         <>
