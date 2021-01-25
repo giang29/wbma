@@ -1,14 +1,10 @@
 import React from 'react';
-import {Button, SafeAreaView, StatusBar} from 'react-native';
-import GlobalStyles from '../styles/GlobalStyles';
+import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import List from '../components/List';
 import PropTypes from 'prop-types';
 
 const Home = ({navigation}) => (
-  <SafeAreaView style={GlobalStyles.droidSafeArea}>
-    <Button title={'Profile'} onPress={() => {
-      navigation.navigate('Profile');
-    }} />
+  <SafeAreaView style={styles.container}>
     <List navigation={navigation}/>
     <StatusBar style="auto"/>
   </SafeAreaView>
@@ -17,5 +13,12 @@ const Home = ({navigation}) => (
 Home.propTypes = {
   navigation: PropTypes.any,
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
 
 export default Home;
