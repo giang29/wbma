@@ -6,11 +6,14 @@ import Login from '../views/Login';
 import {NavigationContainer} from '@react-navigation/native';
 import {MainContext} from '../contexts/MainContext';
 import Profile from '../views/Profile';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {
+  createMaterialBottomTabNavigator,
+} from '@react-navigation/material-bottom-tabs';
+// eslint-disable-next-line max-len
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 const Navigator = () => {
   return (
@@ -23,29 +26,24 @@ const Navigator = () => {
 const TabScreen = () => {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        // eslint-disable-next-line react/prop-types,react/display-name
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-
-          if (route.name === 'Home') {
-            iconName = focused ?
-              'ios-information-circle' :
-              'ios-information-circle-outline';
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'ios-list-box' : 'ios-list';
-          }
-
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color}/>;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
-      }}>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
+      activeColor='black'
+      barStyle={{backgroundColor: '#ffff'}}>
+      <Tab.Screen name="Home" component={Home}
+        options={{
+          tabBarLabel: 'Home',
+          // eslint-disable-next-line react/prop-types,react/display-name
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}/>
+      <Tab.Screen name="Profile" component={Profile}
+        options={{
+          tabBarLabel: 'Profile',
+          // eslint-disable-next-line react/prop-types,react/display-name
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="face" color={color} size={26} />
+          ),
+        }}/>
     </Tab.Navigator>
   );
 };

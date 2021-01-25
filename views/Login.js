@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import {
   StyleSheet,
   Platform,
-  Text, KeyboardAvoidingView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
@@ -34,9 +34,8 @@ const Login = ({navigation}) => { // props is needed for navigation
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <Text>Login</Text>
-      <LogInForm navigation={navigation} />
-      <RegisterForm navigation={navigation} />
+      <LogInForm navigation={navigation}/>
+      <RegisterForm navigation={navigation}/>
     </KeyboardAvoidingView>
   );
 };

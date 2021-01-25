@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const url = 'http://media.mw.metropolia.fi/wbma/';
 
@@ -67,4 +66,13 @@ const logIn = async (inputs) => {
   }
 };
 
-export {useLoadMedia, register, logIn};
+const fetchAvatar = async (userId) => {
+  try {
+    const response = await fetch(`${url}tags/avatar_${userId}`);
+    return await response.json();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export {useLoadMedia, register, logIn, fetchAvatar};

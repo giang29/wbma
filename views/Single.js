@@ -1,18 +1,21 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, Text, Image} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import PropTypes from 'prop-types';
+import {Card, Text} from 'react-native-elements';
+import RatioAwareImage from '../components/RatioAwareImage';
 
 const Single = ({route}) => {
   const singleMedia = route.params;
+  const uri = `http://media.mw.metropolia.fi/wbma/uploads/${singleMedia.filename}`;
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>{singleMedia.title}</Text>
-      <Text style={styles.description}>{singleMedia.description}</Text>
-
-      <Image
-        style={{height: 500, width: 300, marginTop: 16}}
-        source={{uri: `http://media.mw.metropolia.fi/wbma/uploads/${singleMedia.filename}`}}/>
-
+      <Card>
+        <RatioAwareImage
+          uri={uri}
+          resizeMode="cover"/>
+        <Text style={{marginTop: 40, fontSize: 24}}>{singleMedia.title}</Text>
+        <Text>{singleMedia.description}</Text>
+      </Card>
     </SafeAreaView>
   );
 };
@@ -21,9 +24,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
   },
 });
 

@@ -1,8 +1,10 @@
 import React, {useContext} from 'react';
 import {
-  View,
-  Button, Alert,
+  View, Alert,
 } from 'react-native';
+import {
+  Text, Button,
+} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {logIn} from '../hooks/ApiHooks';
 import FormTextInput from './FormTextInput';
@@ -26,7 +28,12 @@ const LogInForm = ({navigation}) => { // props is needed for navigation
   };
 
   return (
-    <View style={{width: '100%', padding: 16}}>
+    <View style={{width: '100%'}}>
+      <Text
+        style={{alignSelf: 'center', fontSize: 24, fontWeight: 'bold'}}
+      >
+        Login
+      </Text>
       <FormTextInput
         autoCapitalize="none"
         placeholder="username"

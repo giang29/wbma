@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  View,
-  Button, Alert,
+  View, Alert,
 } from 'react-native';
+import {Button, Text} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {register} from '../hooks/ApiHooks';
 import FormTextInput from './FormTextInput';
@@ -21,7 +21,12 @@ const RegisterForm = ({navigation}) => { // props is needed for navigation
   };
 
   return (
-    <View style={{width: '100%', padding: 16}}>
+    <View style={{width: '100%'}}>
+      <Text
+        style={{alignSelf: 'center', fontSize: 24, fontWeight: 'bold'}}
+      >
+        Register
+      </Text>
       <FormTextInput
         autoCapitalize="none"
         placeholder="username"
