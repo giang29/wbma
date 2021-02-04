@@ -12,7 +12,7 @@ import useLogInForm from '../hooks/LoginHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MainContext} from '../contexts/MainContext';
 
-const LogInForm = ({navigation}) => { // props is needed for navigation
+const LogInForm = ({navigation, onCreateAccountClick}) => {
   const {handleInputChange, inputs} = useLogInForm();
   const {setIsLoggedIn, setUser} = useContext(MainContext);
   const doLogIn = async () => {
@@ -46,12 +46,14 @@ const LogInForm = ({navigation}) => { // props is needed for navigation
         secureTextEntry={true}
       />
       <Button title="LogIn!" onPress={doLogIn}/>
+      <Text onPress={onCreateAccountClick}>No account yet?</Text>
     </View>
   );
 };
 
 LogInForm.propTypes = {
   navigation: PropTypes.object,
+  onCreateAccountClick: PropTypes.func,
 };
 
 export default LogInForm;

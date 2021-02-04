@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Platform,
@@ -29,13 +29,24 @@ const Login = ({navigation}) => { // props is needed for navigation
   useEffect(() => {
     getToken();
   }, []);
+  const [showLoginView, setShowLoginView] = useState(true);
+  let form;
+
+  if (showLoginView) {
+    form = <LogInForm navigation={navigation} onCreateAccountClick={(e) => {
+      setShowLoginView(false);
+    }}/>;
+  } else {
+    form = <RegisterForm navigation={navigation} onLoginClick={(e) => {
+      setShowLoginView(true);
+    }}/>;
+  }
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <LogInForm navigation={navigation}/>
-      <RegisterForm navigation={navigation}/>
+      {form}
     </KeyboardAvoidingView>
   );
 };

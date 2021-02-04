@@ -75,4 +75,10 @@ const fetchAvatar = async (userId) => {
   }
 };
 
-export {useLoadMedia, register, logIn, fetchAvatar};
+const checkUsernameAvailability = async (username) => {
+  return fetch(`${url}users/username/${username}`)
+      .then((v) => v.json())
+      .then((v) => v.available);
+};
+
+export {useLoadMedia, register, logIn, fetchAvatar, checkUsernameAvailability};
