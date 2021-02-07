@@ -1,10 +1,12 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {MainContext} from '../contexts/MainContext';
 
 const url = 'http://media.mw.metropolia.fi/wbma/';
 
 const fetchData = async () => {
   try {
-    const response = await fetch(`${url}media`);
+    const response = await fetch(`${url}tags/wbma-giangp`);
     return await response.json();
   } catch (e) {
     console.log(e);
@@ -19,11 +21,12 @@ const enrichImageData = async (item) => {
 
 const useLoadMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
+  const {refresh} = useContext(MainContext);
   useEffect(() => {
     fetchData()
         .then((items) => Promise.all(items.map((i) => enrichImageData(i))))
         .then((items) => setMediaArray(items));
-  }, []);
+  }, [refresh]);
   return mediaArray;
 };
 
@@ -81,4 +84,52 @@ const checkUsernameAvailability = async (username) => {
       .then((v) => v.available);
 };
 
-export {useLoadMedia, register, logIn, fetchAvatar, checkUsernameAvailability};
+const uploadImage = async (inputs) => {
+  // ImagePicker saves the taken photo to disk and returns a local URI to it
+  const localUri = inputs.image.uri;
+  const filename = localUri.split('/').pop();
+
+  // Infer the type of the image
+  const match = /\.(\w+)$/.exec(filename);
+  let type = match ? `image/${match[1]}` : `image`;
+  if (type === 'image/jpg') type = 'image/jpeg';
+
+  // Upload the image using the fetch and FormData APIs
+  const formData = new FormData();
+  // Assume "photo" is the name of the form field the server expects
+  formData.append('file', {uri: localUri, name: filename, type});
+  formData.append('title', inputs['title']);
+  formData.append('description', inputs['description']);
+  AsyncStorage.getItem('userToken')
+      .then((token) => {
+        return fetch(`${url}media`, {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'x-access-token': token,
+          },
+          method: 'POST',
+          body: formData,
+        })
+            .then((r) => r.json())
+            .then((json) => json.file_id)
+            .then((id) => {
+              console.log(id);
+              const fetchOptions = {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'x-access-token': token,
+                },
+                body: JSON.stringify({
+                  file_id: id,
+                  tag: 'wbma-giangp',
+                }),
+              };
+              return fetch(url + 'tags', fetchOptions);
+            });
+      });
+};
+
+export {useLoadMedia, register, logIn, fetchAvatar,
+  checkUsernameAvailability, uploadImage};

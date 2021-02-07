@@ -11,6 +11,7 @@ import {
 } from '@react-navigation/material-bottom-tabs';
 // eslint-disable-next-line max-len
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Upload from '../views/Upload';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -42,6 +43,15 @@ const TabScreen = () => {
           // eslint-disable-next-line react/prop-types,react/display-name
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="face" color={color} size={26} />
+          ),
+        }}/>
+      <Tab.Screen name="Upload" component={Upload}
+        options={{
+          tabBarLabel: 'Upload',
+          // eslint-disable-next-line react/prop-types,react/display-name
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="plus"
+              color={color} size={26} />
           ),
         }}/>
     </Tab.Navigator>
