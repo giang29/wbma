@@ -3,6 +3,7 @@ import {StyleSheet, SafeAreaView} from 'react-native';
 import PropTypes from 'prop-types';
 import {Card, Text} from 'react-native-elements';
 import RatioAwareImage from '../components/RatioAwareImage';
+import {Video} from 'expo-av';
 
 const Single = ({route}) => {
   const singleMedia = route.params;
@@ -10,9 +11,12 @@ const Single = ({route}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Card>
-        <RatioAwareImage
-          uri={uri}
-          resizeMode="cover"/>
+        {(singleMedia.media_type === 'video') ?
+          <Video source={{uri: uri}} resizeMode="cover"
+            isLooping useNativeControls/> :
+          <RatioAwareImage
+            uri={uri}
+            resizeMode="cover"/>}
         <Text style={{marginTop: 40, fontSize: 24}}>{singleMedia.title}</Text>
         <Text>{singleMedia.description}</Text>
       </Card>
